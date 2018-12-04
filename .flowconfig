@@ -1,0 +1,29 @@
+[ignore]
+node_modules
+
+[include]
+./src
+
+[libs]
+
+[lints]
+
+[options]
+esproposal.decorators=ignore
+module.name_mapper='^routes' ->'<PROJECT_ROOT>/src/routes'
+module.name_mapper='^types' ->'<PROJECT_ROOT>/src/types'
+module.name_mapper='^modules' ->'<PROJECT_ROOT>/src/modules'
+module.name_mapper='^services' ->'<PROJECT_ROOT>/src/services'
+module.name_mapper='^stores' ->'<PROJECT_ROOT>/src/stores'
+module.name_mapper='^constants' ->'<PROJECT_ROOT>/src/constants'
+module.name_mapper='^components' ->'<PROJECT_ROOT>/src/components'
+module.name_mapper='^models' ->'<PROJECT_ROOT>/src/models'
+module.name_mapper='^layouts' ->'<PROJECT_ROOT>/src/layouts'
+module.name_mapper='^assets' ->'<PROJECT_ROOT>/src/assets'
+module.name_mapper='^img' ->'<PROJECT_ROOT>/src/assets/img'
+module.name_mapper='^translations' ->'<PROJECT_ROOT>/src/translations'
+module.name_mapper='^hocs' ->'<PROJECT_ROOT>/src/components/hocs'
+module.name_mapper='^utils' ->'<PROJECT_ROOT>/src/utils'
+module.name_mapper='^src' ->'<PROJECT_ROOT>/src'
+
+[strict]

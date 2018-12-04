@@ -21,3 +21,10 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# vim service files
+**.tern-project**
+**.tern-port**
+**tags**
+**tags.lock**
+**.smartgf_tags**
