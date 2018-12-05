@@ -25,5 +25,7 @@ module.name_mapper='^translations' ->'<PROJECT_ROOT>/src/translations'
 module.name_mapper='^hocs' ->'<PROJECT_ROOT>/src/components/hocs'
 module.name_mapper='^utils' ->'<PROJECT_ROOT>/src/utils'
 module.name_mapper='^src' ->'<PROJECT_ROOT>/src'
+module.file_ext=.sass
+module.file_ext=.scss
 
 [strict]
