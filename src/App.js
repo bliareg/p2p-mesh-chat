@@ -4,7 +4,7 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 import shortid from 'shortid';
 
-import { mainPeerStore, mainMessageStore, appSwarm } from 'context';
+import { mainPeerStore, mainMessageStore, signalService } from 'context';
 
 @observer
 class App extends React.Component<{}, {
@@ -36,14 +36,19 @@ class App extends React.Component<{}, {
       return;
     }
 
-    appSwarm.message(userId, message);
+    signalService.message(userId, message);
   }
 
   _renderMessages = () => {
-    const messages = mainMessageStore.values || [];
+    const { userId } = this.state;
+
+    if (!userId) {
+      return null;
+    }
+    const messages = mainMessageStore.getValues(userId);
 
     return messages.map<React.Element<*>>(message => (
-      <li key={shortid()}>{message}</li>
+      <li key={shortid()}>{message.value}</li>
     ))
   }
 

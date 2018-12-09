@@ -3,12 +3,12 @@
 import WebrtcSwarm from 'webrtc-swarm';
 import { signalHub } from './signalHub.js';
 import { Peers } from 'stores';
-import { Messages } from 'stores';
+import type { Signal } from 'models';
 
 class Swarm {
   swarm: WebrtcSwarm;
   peerUpdateCallback: ?({ action: string, peers: any, peer: any, id: any }) => void;
-  dataFlowCallback: ?({ action: string, data: string, peer: any, id: any }) => void;
+  dataFlowCallback: ?({ data: string, peer: any, userId: string }) => void;
   textDecoder: TextDecoder;
 
   constructor() {
@@ -25,7 +25,7 @@ class Swarm {
     this.peerUpdateCallback = peerUpdateCallback;
   }
 
-  setDataCallback(dataFlowCallback: ({ action: string, data: string, peer: any, id: any }) => void) {
+  setDataCallback(dataFlowCallback: ({ data: string, peer: any, userId: string }) => void) {
     this.dataFlowCallback = dataFlowCallback;
   }
 
@@ -54,12 +54,13 @@ class Swarm {
     });
   }
 
-  message(id: string, message: string) {
+  signal(id: string, signal: Signal) {
     const { swarm } = this;
     const peer = swarm.remotes[id];
+    const data = signal.pureData;
 
     if (peer) {
-      peer.write(message);
+      peer.write(data);
     }
   }
 
@@ -74,7 +75,7 @@ class Swarm {
     const message = this.textDecoder.decode(data) || '';
 
     if (this.dataFlowCallback) {
-      this.dataFlowCallback({ action, id, peer, data: message });
+      this.dataFlowCallback({ userId: id, peer, data: message });
     }
   }
 }
@@ -86,11 +87,4 @@ const subscribeStoreForPeers = (swarm: Swarm, store: Peers) => {
   swarm.setPeersCallback(callback);
 };
 
-const subscribeStoreForStreamData = (swarm: Swarm, store: Messages) => {
-  const callback = (updateParams: any) => {
-    Messages.mainCallback(updateParams, store)
-  };
-  swarm.setDataCallback(callback);
-};
-
-export { Swarm, subscribeStoreForPeers, subscribeStoreForStreamData };
+export { Swarm, subscribeStoreForPeers };

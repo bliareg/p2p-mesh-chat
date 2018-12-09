@@ -1,34 +1,43 @@
 // @flow
+
 import { observable, action } from 'mobx';
+import type { MessageList, SignalProcessor, Signal, Message } from 'types';
 
-class Messages {
+class Messages implements SignalProcessor {
   @observable
-  values: Array<string> = [];
+  values: MessageList = {};
 
   @action
-  addValues(values: Array<string> = []) {
-    this.values = values;
-  }
+  pushValue(data: { userId: string, ownerId: string, value: string }) {
+    const { userId } = data;
+    const messages = this.values[userId] || [];
+    const newMessages = [
+      ...messages,
+      data
+    ];
 
-  @action
-  pushValue(value: string) {
-    this.values = [
+    this.values = {
       ...this.values,
-      value
-    ]
+      [userId]: newMessages
+    }
   }
 
   @action
   clean() {
-    this.values = [];
+    this.values = {};
   }
 
-  static mainCallback = (
-    updateData: { action: string, data: string, peer: any, id: any },
-    store: Messages
-  ): void => {
-    const { data } = updateData;
-    store.pushValue(data);
+  getValues(userId: ?string): Array<Message> {
+    if (!userId) {
+      return []
+    }
+
+    return this.values[userId] || [];
+  }
+
+  process(userId: string, signal: Signal) {
+    const value: Message = (signal.data: any);
+    this.pushValue(value);
   }
 }
 
