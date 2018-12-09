@@ -155,7 +155,9 @@ module.exports = {
       services: path.join(paths.appSrc, 'services'),
       utils: path.join(paths.appSrc, 'utils'),
       stores: path.join(paths.appSrc, 'stores'),
-      context: path.join(paths.appSrc, 'context')
+      context: path.join(paths.appSrc, 'context'),
+      types: path.join(paths.appSrc, 'types'),
+      models: path.join(paths.appSrc, 'models')
     },
     plugins: [
       // Adds support for installing with Plug'n'Play, leading to faster installs and adding
