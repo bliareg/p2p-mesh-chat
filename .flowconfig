@@ -1,10 +1,10 @@
 [ignore]
-.*/node_modules/.*
 
 [include]
 ./src
 
 [libs]
+./flow-typed
 
 [lints]
 
@@ -12,7 +12,12 @@
 esproposal.decorators=ignore
 esproposal.optional_chaining=enable
 module.name_mapper='^src' ->'<PROJECT_ROOT>/src'
+module.name_mapper='^constants' ->'<PROJECT_ROOT>/src/constants'
+module.name_mapper='^services' ->'<PROJECT_ROOT>/src/services'
+module.name_mapper='^utils' ->'<PROJECT_ROOT>/src/utils'
+module.name_mapper='^stores' ->'<PROJECT_ROOT>/src/stores'
+module.name_mapper='^context' ->'<PROJECT_ROOT>/src/context'
 module.file_ext=.sass
 module.file_ext=.scss
-
-[strict]
+module.file_ext=.js
+module.file_ext=.jsx
