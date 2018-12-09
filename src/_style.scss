@@ -1,0 +1,242 @@
+// @import 'fontawesome-all.css';
+
+$titleHeight: 22px;
+$leftWidth: 320px;
+$rightWidth: calc(100% - #{$leftWidth});
+$profileHeight: 80px;
+$writeAMessageHeight: 80px;
+$searchInputHeight: 50px;
+$searchIconFontSize: 11px;
+$personsHeight: calc(100% - #{$profileHeight + $searchInputHeight});
+$messagesHeight: calc(100% - #{$profileHeight + $writeAMessageHeight});
+
+$personHeight: $profileHeight;
+$personLeftAndRightPadding: 30px;
+$personLeftWidth: 50px;
+$personRightWidth: calc(100% - #{$personLeftWidth});
+$personNameLineHeight: $personLeftWidth / 2;
+
+$fontSize1: 13px; /* default font size */
+$fontSize2: 10px; /* person's last message time */
+
+$gray1: #eeeeee; /* title background color */
+$gray2: #e8e8e8; /* border color */
+$gray3: #f7f7f7; /* selected person background color */
+$gray4: #aaaaaa; /* my status color, person status color, person last message color, person last message time color */
+$gray5: #e5e5ea; /* incoming message background color */
+$gray6: #757575; /* search icon color, add icon color */
+$blue1: #39a1f9; /* outgoing message background color */
+
+* {
+  box-sizing: border-box;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  cursor: default;
+  overflow: hidden;
+  background-color: #fff;
+  -webkit-user-select: none;
+}
+
+body, input {
+  font-size: $fontSize1;
+}
+
+input {
+  outline: none;
+}
+
+body, html, #root, #root2 {
+  height: 100%;
+}
+
+.acjc {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#title {
+  text-align: center;
+  height: $titleHeight;
+  -webkit-app-region: drag;
+  background-color: $gray1;
+  line-height: $titleHeight;
+  -webkit-user-select: none;
+  border-bottom: 1px solid $gray2;
+}
+
+#app {
+  height: calc(100% - #{$titleHeight});
+}
+
+.person {
+  height: $personHeight;
+  padding: 0 $personLeftAndRightPadding;
+
+  &.selected {
+    background-color: $gray3;
+  }
+
+  .personLeft {
+    float: left;
+    width: $personLeftWidth;
+
+    .personProfilePicture {
+      border-radius: 50%;
+      width: $personLeftWidth;
+      height: $personLeftWidth;
+      margin-top: ($personHeight - $personLeftWidth) / 2;
+    }
+  }
+
+  .personRight {
+    float: left;
+    padding-left: 15px;
+    width: $personRightWidth;
+    padding-top: ($personHeight - $personLeftWidth) / 2;
+
+    .personName {
+      width: 80%;
+      color: #000;
+      float: left;
+      overflow: hidden;
+      font-weight: bold;
+      line-height: $personNameLineHeight;
+    }
+
+    .personLastMessageTime {
+      width: 20%;
+      float: right;
+      color: $gray4;
+      text-align: right;
+      font-size: $fontSize2;
+      line-height: $personNameLineHeight;
+    }
+
+    .personLastMessage {
+      clear: both;
+      color: $gray4;
+      overflow: hidden;
+      line-height: $personNameLineHeight;
+    }
+  }
+}
+
+#left {
+  float: left;
+  height: 100%;
+  width: $leftWidth;
+  border-right: 1px solid $gray2;
+
+  #myProfile {
+    border-bottom: 1px solid $gray2;
+
+    .person {
+      @extend .person;
+    }
+  }
+
+  #search {
+    width: 100%;
+    height: $searchInputHeight;
+    border-bottom: 1px solid $gray2;
+
+    #searchIcon {
+      float: left;
+      color: $gray6;
+      text-align: center;
+      font-size: $searchIconFontSize;
+      width: $searchIconFontSize * 2;
+      height: $searchIconFontSize * 2;
+      line-height: $searchIconFontSize * 2;
+      margin-left: $personLeftAndRightPadding - ($searchIconFontSize / 2);
+      margin-top: (($searchInputHeight - ($searchIconFontSize * 2)) / 2) + 0;
+    }
+
+    input {
+      float: left;
+      height: 100%;
+      border: none;
+      padding: 0 8px;
+      width: calc(100% - #{(($personLeftAndRightPadding - ($searchIconFontSize / 2)) + ($searchIconFontSize * 2)) * 2});
+    }
+
+    #addIcon {
+      float: left;
+      color: $gray6;
+      text-align: center;
+      font-size: $searchIconFontSize;
+      width: $searchIconFontSize * 2;
+      height: $searchIconFontSize * 2;
+      line-height: $searchIconFontSize * 2;
+      margin-right: $personLeftAndRightPadding - ($searchIconFontSize / 2);
+      margin-top: (($searchInputHeight - ($searchIconFontSize * 2)) / 2) + 0;
+    }
+  }
+
+  #persons {
+    overflow-y: auto;
+    height: $personsHeight;
+
+    .person {
+      @extend .person;
+    }
+  }
+}
+
+#right {
+  float: left;
+  height: 100%;
+  width: $rightWidth;
+
+  #addSomeone {
+    color: $gray2;
+    font-size: 40px;
+  }
+
+  #selectedPersonProfile {
+    border-bottom: 1px solid $gray2;
+  }
+
+  #messages {
+    overflow-y: auto;
+    height: $messagesHeight;
+    padding: $personLeftAndRightPadding;
+
+    .message {
+      clear: both;
+      padding: 10px 15px;
+      border-radius: 6px;
+      margin-bottom: 15px;
+      max-width: calc(100% - 30%);
+
+      &.in {
+        float: left;
+        background-color: $gray5;
+      }
+
+      &.out {
+        color: #fff;
+        float: right;
+        background-color: $blue1;
+      }
+    }
+  }
+
+  #write {
+    height: $writeAMessageHeight;
+    border-top: 1px solid $gray2;
+
+    input {
+      width: 100%;
+      height: 100%;
+      border: none;
+      padding: 0 $personLeftAndRightPadding;
+    }
+  }
+}
+

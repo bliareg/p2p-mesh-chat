@@ -157,7 +157,8 @@ module.exports = {
       stores: path.join(paths.appSrc, 'stores'),
       context: path.join(paths.appSrc, 'context'),
       types: path.join(paths.appSrc, 'types'),
-      models: path.join(paths.appSrc, 'models')
+      models: path.join(paths.appSrc, 'models'),
+      components: path.join(paths.appSrc, 'components')
     },
     plugins: [
       // Adds support for installing with Plug'n'Play, leading to faster installs and adding

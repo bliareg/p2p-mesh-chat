@@ -3,6 +3,12 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 import shortid from 'shortid';
+import './_style.scss';
+
+import MyProfile from 'components/MyProfile';
+import UsersList from 'components/UsersList';
+import Profile from 'components/Profile';
+import Chat from 'components/Chat';
 
 import { mainPeerStore, mainMessageStore, signalService } from 'context';
 
@@ -67,21 +73,46 @@ class App extends React.Component<{}, {
       peers: mainPeerStore.values
     };
 
+    const { userId } = this.state;
+
     return (
-      <div>
-        <h5>Messages</h5>
-        <ul>
-          {this._renderMessages()}
-        </ul>
-        <h5>Users</h5>
-        <ul>
-          {this._renderListOfUsers()}
-        </ul>
-        <input value={this.state.message} type="text" name="message" onChange={this.onChange} />
-        <button onClick={this.sendMessage}>Send</button>
+      <div id='app'>
+        <div id='left'>
+
+          <MyProfile />
+          <UsersList selectedId={userId} onChange={this.selectUserToMessage} />
+
+        </div>
+
+        {userId && <div id='right'>
+          <Profile selectedId={userId} />
+          <Chat selectedId={userId} />
+        </div>}
+
+        {!userId && <div id='right'>
+          <div className='acjc'>
+            <div id='addSomeone'>
+              Add someone...
+            </div>
+          </div>
+        </div>}
       </div>
     );
   }
 }
 
 export default App;
+      {/*
+        <div>
+          <h5>Messages</h5>
+          <ul>
+            {this._renderMessages()}
+          </ul>
+          <h5>Users</h5>
+          <ul>
+            {this._renderListOfUsers()}
+          </ul>
+          <input value={this.state.message} type="text" name="message" onChange={this.onChange} />
+          <button onClick={this.sendMessage}>Send</button>
+        </div>
+      */}
