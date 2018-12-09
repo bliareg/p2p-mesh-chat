@@ -11,6 +11,7 @@ import { signalService, appSwarm, mainMessageStore } from 'context';
 class Chat extends React.Component<{ selectedId: ?string }, { message: string }> {
 
   state = { message: '' }
+  chatEndAnchor: ?HTMLDivElement
 
   onChange = (e: SyntheticInputEvent<*>) => {
     const { name, value } = e.currentTarget;
@@ -33,7 +34,15 @@ class Chat extends React.Component<{ selectedId: ?string }, { message: string }>
     signalService.message(selectedId, message);
 
     // Clean message field
-    this.setState({ message: '' });
+    this.setState({ message: '' }, () => {
+      this._scrollToBottom()
+    });
+  }
+
+  _scrollToBottom = () => {
+     if (this.chatEndAnchor) {
+       this.chatEndAnchor.scrollIntoView({ behavior: 'smooth' })
+     }
   }
 
   _renderMessages = () => {
@@ -65,6 +74,7 @@ class Chat extends React.Component<{ selectedId: ?string }, { message: string }>
       <React.Fragment>
         <div id='messages'>
           {this._renderMessages()}
+          <div className="message" style={{ visibility: 'none' }} ref={(chatEndAnchor) => this.chatEndAnchor = chatEndAnchor} />
         </div>
 
         <div id='write'>
