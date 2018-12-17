@@ -1,3 +1,3 @@
 // @flow
 
-export const SWARM_DOMENS = ['localhost:8080'];
+export const SWARM_DOMENS = ['139.59.184.179:8888'];
